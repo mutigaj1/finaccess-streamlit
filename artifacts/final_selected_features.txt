@@ -1,0 +1,11 @@
+county
+sex
+age_years
+household_size
+education
+marital_status
+children_in_household
+livelihood
+can_access_internet
+internet_frequency
+financial_health

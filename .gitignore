@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env
+.venv/
+venv/
+
+# Large local-only source assets
+2024_Finaccess_Publicdata.dta
+2024 FinAccess Questionnaire.pdf
+FinAccess 2024 Manual.pdf
+artifacts/finaccess_random_forest_pipeline.joblib
+artifacts/finaccess_final_pipeline.joblib
+artifacts/finaccess_feature_columns.joblib
+artifacts/final_selected_features.joblib

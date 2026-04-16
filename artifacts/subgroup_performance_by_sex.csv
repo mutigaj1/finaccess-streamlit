@@ -1,0 +1,3 @@
+group,rows,accuracy,macro_f1,excluded_recall
+Female,2377,0.7055,0.5633,0.2658
+Male,1572,0.6622,0.6006,0.3269
