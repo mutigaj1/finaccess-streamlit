@@ -35,13 +35,19 @@ st.caption(
 )
 st.page_link("pages/3_FinAccess_Project.py", label="Open the FinAccess Project page")
 
-st.markdown("### 1. The project in one view")
+st.markdown("### 1. What this project is")
+st.write(
+    "This project is a machine learning capstone built around a simple goal: use the FinAccess 2024 survey to "
+    "estimate which financial access group a person is most likely to belong to. Instead of leaving the work inside "
+    "a notebook, the project turns the analysis into a clear Streamlit app that explains the problem, shows the "
+    "results, and lets a visitor try the model interactively."
+)
 render_fact_grid(
     [
         ("Dataset", "FinAccess 2024 public survey for Kenya"),
         ("Responses", "20,871"),
-        ("Full public dataset fields", "3,816"),
-        ("Counties", "47"),
+        ("Fields in the full public dataset", "3,816"),
+        ("Counties covered", "47"),
     ],
     columns=4,
 )
