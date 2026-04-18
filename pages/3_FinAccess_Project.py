@@ -244,22 +244,29 @@ with tabs[3]:
     notebook_bytes = safe_read_bytes(notebook_path)
 
     download_cols = st.columns(2)
-    if proposal_bytes is not None:
-        download_cols[0].download_button(
-            "Download revised proposal",
-            data=proposal_bytes,
-            file_name=proposal_path.name,
-            mime="application/pdf",
-            use_container_width=True,
-        )
-    if notebook_bytes is not None:
-        download_cols[1].download_button(
-            "Download master notebook",
-            data=notebook_bytes,
-            file_name=notebook_path.name,
-            mime="application/x-ipynb+json",
-            use_container_width=True,
-        )
+    with download_cols[0]:
+        if proposal_bytes is not None:
+            st.download_button(
+                "Download revised proposal",
+                data=proposal_bytes,
+                file_name=proposal_path.name,
+                mime="application/pdf",
+                use_container_width=True,
+            )
+        else:
+            st.warning("Planning document is not bundled in this deployment yet.")
+
+    with download_cols[1]:
+        if notebook_bytes is not None:
+            st.download_button(
+                "Download master notebook",
+                data=notebook_bytes,
+                file_name=notebook_path.name,
+                mime="application/x-ipynb+json",
+                use_container_width=True,
+            )
+        else:
+            st.warning("Capstone notebook is not bundled in this deployment yet.")
 
     st.write(
         "This app reflects patterns in one public survey wave. It is designed for explanation and interaction, "
