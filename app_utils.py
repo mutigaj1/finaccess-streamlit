@@ -216,12 +216,20 @@ def load_top_excluded_counties() -> pd.DataFrame:
 
 def predict_profile(pipeline: object, form_data: dict[str, object]) -> tuple[str, pd.Series]:
     input_frame = pd.DataFrame([form_data])
-    predicted_class = pipeline.predict(input_frame)[0]
-    probabilities = pd.Series(
-        pipeline.predict_proba(input_frame)[0],
-        index=pipeline.classes_,
-        name="probability",
-    ).sort_values(ascending=False)
+    try:
+        predicted_class = pipeline.predict(input_frame)[0]
+        probabilities = pd.Series(
+            pipeline.predict_proba(input_frame)[0],
+            index=pipeline.classes_,
+            name="probability",
+        ).sort_values(ascending=False)
+    except AttributeError as exc:
+        if "_fill_dtype" in str(exc):
+            raise RuntimeError(
+                "The saved model artifact is incompatible with the scikit-learn version running this app. "
+                "Pin scikit-learn to 1.7.2 in requirements.txt, rebuild the Streamlit artifacts, and redeploy."
+            ) from exc
+        raise
     return predicted_class, probabilities
 
 

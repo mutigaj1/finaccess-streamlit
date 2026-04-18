@@ -167,7 +167,12 @@ with left:
             "financial_health": financial_health,
         }
 
-        prediction, probabilities = predict_profile(pipeline, form_data)
+        try:
+            prediction, probabilities = predict_profile(pipeline, form_data)
+        except RuntimeError as exc:
+            st.error(str(exc))
+            st.stop()
+
         story = build_prediction_story(context, form_data, prediction, probabilities, top_counties)
 
         st.success(f"Predicted profile: {prediction}")

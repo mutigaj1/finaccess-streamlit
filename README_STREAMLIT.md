@@ -22,5 +22,6 @@ C:\Users\jesse\anaconda3\python.exe -m streamlit run app.py
 ## Notes
 
 - The prediction page uses a rebuilt pipeline artifact because the older saved joblib file was created with a different scikit-learn version.
+- Keep the deployment environment pinned to `scikit-learn==1.7.2`. If Streamlit Cloud upgrades to a different version and prediction starts failing with a `SimpleImputer` `_fill_dtype` error, rebuild the artifacts with 1.7.2 and redeploy.
 - Resume and portfolio sections include placeholders where the project folder did not provide personal details.
 - Replace placeholder cards and work-history text before the final submission.
