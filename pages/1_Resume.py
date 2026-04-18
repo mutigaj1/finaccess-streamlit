@@ -9,25 +9,20 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))
 
-from app_utils import FIGURE_DIR, configure_page, render_hero, render_skill_pills
+from app_utils import configure_page, render_hero, render_skill_pills
 from profile_content import PROFILE
 
 
 configure_page("Resume")
 
 render_hero(
-    title="Resume",
-    subtitle="Course-required profile page with education, experience, technical skills, and a supporting visual.",
+    title=PROFILE["name"],
+    subtitle=f"{PROFILE['title']} | {PROFILE['location']}",
 )
 
-highlight_cols = st.columns(3)
-highlight_cols[0].metric("Primary focus", "Applied ML")
-highlight_cols[1].metric("Project area", "Financial inclusion")
-highlight_cols[2].metric("Deployment", "Streamlit")
+education_col, experience_col = st.columns([0.95, 1.05], gap="large")
 
-left, right = st.columns([1.1, 0.9], gap="large")
-
-with left:
+with education_col:
     st.subheader("Education")
     for item in PROFILE["education"]:
         with st.container(border=True):
@@ -36,7 +31,8 @@ with left:
             for detail in item["details"]:
                 st.write(f"- {detail}")
 
-    st.subheader("Project Experience")
+with experience_col:
+    st.subheader("Work Experience / Project Experience")
     for item in PROFILE["experience"]:
         with st.container(border=True):
             st.markdown(f"**{item['role']}**")
@@ -44,22 +40,12 @@ with left:
             for detail in item["details"]:
                 st.write(f"- {detail}")
 
-    st.subheader("Skills")
-    render_skill_pills(PROFILE["skills"])
+st.subheader("Technical Skills")
+render_skill_pills(PROFILE["skills"])
 
-with right:
-    st.subheader("Visual")
-    visual_path = FIGURE_DIR / "adult_feature_importance.png"
-    if visual_path.exists():
-        st.image(
-            str(visual_path),
-            caption="Model feature importance from the FinAccess capstone workflow",
-            use_container_width=True,
-        )
-
-    with st.container(border=True):
-        st.markdown("### Capstone highlights")
-        st.write("- Built a three-class financial access prediction workflow")
-        st.write("- Used weighted survey summaries and subgroup checks")
-        st.write("- Compared multiple classifiers before selecting Gradient Boosting")
-        st.write("- Deployed results in a course-aligned multipage Streamlit app")
+certifications = PROFILE.get("certifications", [])
+if certifications:
+    st.subheader("Certifications")
+    for item in certifications:
+        with st.container(border=True):
+            st.write(item)

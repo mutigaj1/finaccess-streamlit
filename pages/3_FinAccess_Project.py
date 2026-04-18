@@ -42,15 +42,18 @@ def select_from_context(context: dict[str, object], feature: str) -> object:
     return label_to_value(context, feature, selected_label)
 
 
-configure_page("Specific Project Page")
+configure_page("FinAccess Project")
 
 render_hero(
-    title="Predicting Financial Access Profiles in Kenya",
+    title="FinAccess Project",
     subtitle=(
-        "Interactive capstone page for the FinAccess 2024 survey. The model predicts whether an "
-        "adult respondent is most likely to be Excluded, Mobile money only, or Banked."
+        "This page is the interactive prediction tool for the FinAccess 2024 capstone. Enter a respondent profile "
+        "below to estimate whether the person is most likely to be Excluded, Mobile money only, or Banked. Use the "
+        "tabs below to explore model interpretation, comparisons, county context, and supporting downloads."
     ),
 )
+
+st.page_link("app.py", label="Read the full project story on app")
 
 try:
     pipeline, context = load_prediction_artifacts()
@@ -63,51 +66,23 @@ weighted_summary = load_weighted_summary()
 feature_importance = load_feature_importance()
 top_counties = load_top_excluded_counties()
 
-gradient_row = comparison_df.loc[comparison_df["model"] == "Gradient Boosting"].iloc[0]
+best_row = comparison_df.sort_values(
+    by=["test_macro_f1", "test_balanced_accuracy"],
+    ascending=False,
+).iloc[0]
 summary_lookup = weighted_summary.set_index("financial_access_profile")["weighted_percent"].to_dict()
 
 metric_cols = st.columns(5)
-metric_cols[0].metric("Model", "Gradient Boosting")
-metric_cols[1].metric("Macro F1", f"{gradient_row['test_macro_f1']:.4f}")
-metric_cols[2].metric("Balanced accuracy", f"{gradient_row['test_balanced_accuracy']:.4f}")
-metric_cols[3].metric("Excluded recall", f"{gradient_row['test_excluded_recall']:.4f}")
+metric_cols[0].metric("Model", str(best_row["model"]))
+metric_cols[1].metric("Macro F1", f"{best_row['test_macro_f1']:.4f}")
+metric_cols[2].metric("Balanced accuracy", f"{best_row['test_balanced_accuracy']:.4f}")
+metric_cols[3].metric("Excluded recall", f"{best_row['test_excluded_recall']:.4f}")
 metric_cols[4].metric("Adult sample size", f"{int(weighted_summary['sample_count'].sum()):,}")
 
-st.markdown("### Project overview")
-overview_left, overview_right = st.columns([1.1, 0.9], gap="large")
-
-with overview_left:
-    st.write(
-        "This capstone uses the Kenya FinAccess 2024 survey to predict whether an adult respondent is most likely "
-        "to be financially Excluded, Mobile money only, or Banked. The project focuses on prediction and "
-        "interpretation, not causal claims."
-    )
-    st.write(
-        "The current app is driven by a compact feature set selected from the master notebook, including county, "
-        "sex, age, household size, education, marital status, household composition, livelihood, internet access, "
-        "internet frequency, and financial health."
-    )
-
-with overview_right:
-    render_fact_grid(
-        [
-            ("Dataset", "FinAccess 2024 public survey"),
-            ("Problem type", "Multiclass classification"),
-            ("Deployment", "Streamlit"),
-            ("Current best model", "Gradient Boosting"),
-        ],
-        columns=2,
-    )
-
-left, right = st.columns([1.0, 1.0], gap="large")
+left, right = st.columns([1.05, 0.95], gap="large")
 
 with left:
-    st.subheader("Try the model")
-    st.write(
-        "Use the form below to enter a survey-style respondent profile. The output is meant to explain the "
-        "classification in plain language, not to give personal financial advice."
-    )
-
+    st.subheader("Prediction interface")
     with st.form("prediction_form"):
         county = select_from_context(context, "county")
         sex = select_from_context(context, "sex")
@@ -188,7 +163,11 @@ with left:
         )
 
 with right:
-    st.subheader("Quick context from the weighted EDA")
+    st.subheader("Quick context")
+    st.write(
+        "Use the model on the left, then use the tabs below for feature importance, model comparison, county context, "
+        "and supporting downloads."
+    )
     render_fact_grid(
         [
             ("Excluded", f"{summary_lookup.get('Excluded', 0.0):.2f}%"),
@@ -207,8 +186,8 @@ tabs = st.tabs(["Model interpretation", "Model comparison", "County view", "Down
 
 with tabs[0]:
     st.write(
-        "The chart below summarizes the strongest features in the final notebook workflow. Age, education, "
-        "internet frequency, and county are the largest signals in the current model."
+        "The chart and table below show the strongest signals in the current workflow. They help explain which inputs "
+        "matter most to the model's predictions."
     )
     importance_path = FIGURE_DIR / "adult_feature_importance.png"
     if importance_path.exists():
@@ -216,10 +195,7 @@ with tabs[0]:
     st.dataframe(feature_importance, use_container_width=True, hide_index=True)
 
 with tabs[1]:
-    st.write(
-        "The current demo uses Gradient Boosting because it provided the strongest overall balance in the final "
-        "notebook comparison, though excluded-group recall remains the hardest part of the task."
-    )
+    st.write("This table compares the main candidate models from the capstone workflow.")
     st.dataframe(comparison_df, use_container_width=True, hide_index=True)
 
     comparison_chart = pd.DataFrame(
@@ -269,10 +245,10 @@ with tabs[3]:
             st.warning("Capstone notebook is not bundled in this deployment yet.")
 
     st.write(
-        "This app reflects patterns in one public survey wave. It is designed for explanation and interaction, "
-        "not causal inference, institutional decision-making, or personal financial advice."
+        "This project is designed for prediction and interpretation. It should not be used as a causal explanation, "
+        "institutional decision system, or source of personal financial advice."
     )
     st.write(
-        "The classes are intentionally simplified: the Banked group can include respondents who use both banks "
-        "and mobile money, and the app predicts current access status rather than long-term financial outcomes."
+        "The Banked class can include respondents who also use mobile money, and the app predicts current survey-based "
+        "access patterns rather than long-term financial outcomes."
     )

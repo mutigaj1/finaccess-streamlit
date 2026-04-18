@@ -17,7 +17,7 @@ configure_page("General Projects")
 
 render_hero(
     title="General Projects",
-    subtitle="Course portfolio page highlighting the main DTSC 691 project artifacts and supporting materials.",
+    subtitle="Portfolio and supporting materials for the DTSC 691 capstone and related project assets.",
 )
 
 st.info(PROFILE["general_projects_note"])
@@ -36,12 +36,14 @@ for project in PROFILE["general_projects"]:
             file_bytes = safe_read_bytes(file_path)
             if file_bytes is not None:
                 st.download_button(
-                    label="Download local file",
+                    label="Download file",
                     data=file_bytes,
                     file_name=file_path.name,
                     mime="application/octet-stream",
                     key=f"download-{file_path.name}",
                 )
+            else:
+                st.warning("This supporting file is not available in the current deployment.")
 
         if not project.get("page_path") and not project.get("download_path"):
             st.write("Add a private GitHub, Google Drive, or portfolio link here when you are ready.")
