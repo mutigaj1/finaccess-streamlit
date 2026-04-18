@@ -1,44 +1,96 @@
 PROFILE = {
     "name": "Jesse Mutiga",
-    "title": "Applied Data Science Graduate Student",
-    "tagline": "Building practical machine learning projects around Kenya-focused data and public-interest analytics.",
+    "title": "PRINCE2 Agile Project Manager and Business Analyst",
+    "tagline": (
+        "Certified PRINCE2 Agile Practitioner Project Manager and Business Analyst with 6+ years of experience "
+        "delivering user-centered technical solutions across banking, insurance, and digital channels."
+    ),
     "location": "Eastern University | DTSC 691 Capstone",
-    "home_intro": [
-        "This Streamlit app is the public-facing part of my DTSC 691 machine learning capstone. The project uses the Kenya FinAccess 2024 household survey to study patterns in financial inclusion and turn them into an interactive classification tool.",
-        "The guiding question is simple: based on background, household, and digital-access information, which financial access profile is a respondent most likely to fall into? The broader goal is to translate notebook analysis into a clear interface for a non-technical audience.",
-    ],
+    "contact": {
+        "phone": "+254-720-176-766",
+        "email": "jessemutiga2003@live.com",
+    },
     "education": [
         {
-            "program": "Graduate Data Science Program",
+            "program": "Master of Science in Data Science",
             "institution": "Eastern University",
-            "period": "Current",
-            "details": [
-                "Capstone work focused on applied machine learning, model interpretation, and communication.",
-                "Current project focus: financial inclusion patterns in Kenya using FinAccess 2024.",
-            ],
-        }
+            "period": "",
+            "details": [],
+        },
+        {
+            "program": "Bachelor of Economics and Statistics",
+            "institution": "Kenyatta University",
+            "period": "",
+            "details": [],
+        },
+        {
+            "program": "Diploma in Information Technology",
+            "institution": "KCA University",
+            "period": "",
+            "details": [],
+        },
     ],
     "experience": [
         {
-            "role": "Applied Data Science Capstone Researcher",
-            "organization": "Eastern University | DTSC 691",
-            "period": "Spring 2026",
+            "role": "Business Analyst & Project Manager",
+            "organization": "NCBA",
+            "period": "",
             "details": [
-                "Built an end-to-end machine learning workflow using the Kenya FinAccess 2024 public survey.",
-                "Defined a three-class target: Excluded, Mobile money only, and Banked.",
-                "Compared baseline and tree-based models, then deployed the current best workflow in Streamlit.",
-                "Focused on plain-language explanation, weighted survey summaries, and practical model communication.",
+                "Delivered a five-phase enterprise AML program across Kenya, Uganda, Rwanda, and Tanzania, now in production with more than 80 strategic changes implemented.",
+                "Led AML solution design for the AIG Insurance merger with NCBA, including insurance-product onboarding journeys aligned to banking and insurance regulatory standards.",
+                "Translated AML policy requirements into BRDs, functional specifications, and user stories for modules such as real-time PEP screening, GoAML reporting, and customer risk classification.",
+                "Prepared and executed UAT plans and scripts, logged defects, and worked with vendors and IT teams to resolve issues before go-live.",
+                "Coordinated cross-functional delivery teams, facilitated regional stakeholder workshops, created user guides and training decks, and prepared executive dashboards and program status reports.",
             ],
-        }
+        },
+        {
+            "role": "Business Analyst",
+            "organization": "Stanbic Bank",
+            "period": "",
+            "details": [
+                "Turned business needs into actionable enhancements for digital channels such as the Chama App and enterprise data initiatives including the Azure Data Warehouse and Amazon Data Lake.",
+                "Elicited requirements through interviews, workshops, use cases, and stakeholder sessions, then managed change control to keep delivery aligned with project objectives.",
+                "Led data-focused initiatives, including a master data management platform for unified access across more than 40 application databases and wider data-quality remediation work across the bank.",
+                "Supported UAT planning and execution for digital banking solutions and chaired regular stakeholder meetings to review progress, unblock issues, and refine solution direction.",
+            ],
+        },
+        {
+            "role": "Junior Business Analyst and Junior Data Scientist",
+            "organization": "Tezza Business Solutions",
+            "period": "",
+            "details": [
+                "Led development of a resource capacity planning tool that automated manual timelines and improved organization-wide resource tracking and planning efficiency.",
+                "Built a proof-of-concept NLP workflow to detect negative sentiment in customer feedback, categorize issues, and support faster response workflows.",
+            ],
+        },
+        {
+            "role": "Change Management Intern",
+            "organization": "Tezza Business Solutions",
+            "period": "",
+            "details": [
+                "Conducted a gap analysis of the ERP system at the Kenya Public Service Commission, identifying inefficiencies and opportunities for process improvement.",
+            ],
+        },
     ],
     "skills": [
-        "Python",
-        "Pandas",
-        "Scikit-learn",
-        "Streamlit",
-        "Survey data analysis",
-        "Model interpretation",
-        "Data storytelling",
+        "Project Management (PRINCE2 Agile)",
+        "Requirements Elicitation, Prioritization, and Documentation",
+        "Business Process Analysis and Optimization",
+        "Business and Technical Stakeholder Management",
+        "Mobile and Digital Banking Solutions",
+        "Cloud Platforms (Azure)",
+        "Agile and Scrum Environments",
+        "User Acceptance Testing (UAT)",
+        "Requirements Traceability and Change Control",
+        "End User Support and Training Materials Development",
+    ],
+    "certifications": [
+        "PRINCE2 Agile Foundation Certificate in Agile Project Management",
+        "Agile Foundations",
+        "Microsoft Copilot AI: Crafting Effective Prompts for Microsoft 365",
+        "Data Science Certificate, Strathmore University",
+        "ITIL 4 Foundation",
+        "Datagear AML",
     ],
     "general_projects_note": "This page highlights the main deliverables behind the DTSC 691 capstone: the proposal, notebook workflow, and the interactive Streamlit application.",
     "general_projects": [

@@ -17,35 +17,50 @@ configure_page("Resume")
 
 render_hero(
     title=PROFILE["name"],
-    subtitle=f"{PROFILE['title']} | {PROFILE['location']}",
+    subtitle=PROFILE["title"],
 )
 
-education_col, experience_col = st.columns([0.95, 1.05], gap="large")
+contact = PROFILE.get("contact", {})
+contact_parts = []
+if contact.get("phone"):
+    contact_parts.append(contact["phone"])
+if contact.get("email"):
+    contact_parts.append(contact["email"])
+if contact_parts:
+    st.caption(" | ".join(contact_parts))
+
+education_col, experience_col = st.columns([0.9, 1.1], gap="large")
 
 with education_col:
     st.subheader("Education")
     for item in PROFILE["education"]:
         with st.container(border=True):
             st.markdown(f"**{item['program']}**")
-            st.write(f"{item['institution']} | {item['period']}")
-            for detail in item["details"]:
+            institution_line = item["institution"]
+            if item.get("period"):
+                institution_line = f"{institution_line} | {item['period']}"
+            st.write(institution_line)
+            for detail in item.get("details", []):
                 st.write(f"- {detail}")
+
+    certifications = PROFILE.get("certifications", [])
+    if certifications:
+        st.subheader("Certifications")
+        with st.container(border=True):
+            for item in certifications:
+                st.write(f"- {item}")
 
 with experience_col:
     st.subheader("Work Experience / Project Experience")
     for item in PROFILE["experience"]:
         with st.container(border=True):
             st.markdown(f"**{item['role']}**")
-            st.write(f"{item['organization']} | {item['period']}")
+            organization_line = item["organization"]
+            if item.get("period"):
+                organization_line = f"{organization_line} | {item['period']}"
+            st.write(organization_line)
             for detail in item["details"]:
                 st.write(f"- {detail}")
 
 st.subheader("Technical Skills")
 render_skill_pills(PROFILE["skills"])
-
-certifications = PROFILE.get("certifications", [])
-if certifications:
-    st.subheader("Certifications")
-    for item in certifications:
-        with st.container(border=True):
-            st.write(item)
